@@ -1,5 +1,6 @@
 package com.service.lol_munchul.domain.member.entity;
 
+import com.service.lol_munchul.domain.agenda.entity.Agenda;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
