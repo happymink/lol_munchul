@@ -21,17 +21,19 @@ public class Member {
 
     private String password;
 
-    private String nickname;
+    private String summonnerName;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Agenda> agendas = new ArrayList<>();
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Participation> participationList = new ArrayList<>();
 
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private SummonnerInfo summonnerInfo;
 
     @Builder
-    public Member(String email, String password, String nickname) {
+    public Member(String email, String password, String summonnerName) {
         this.email = email;
         this.password = password;
-        this.nickname = nickname;
+        this.summonnerName = summonnerName;
     }
 
 }
