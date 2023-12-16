@@ -1,9 +1,13 @@
 package com.service.lol_munchul.domain.agenda.entity;
 
 import com.service.lol_munchul.domain.agenda.request.AgendaStatus;
+import com.service.lol_munchul.domain.board.entity.Board;
+import com.service.lol_munchul.domain.game.entity.GameInfo;
 import com.service.lol_munchul.domain.member.entity.Member;
+import com.service.lol_munchul.domain.reply.entity.Reply;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +24,10 @@ public class Agenda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "participation_id")
+    private Participation participation;
 
     private String title;
 
@@ -38,15 +46,17 @@ public class Agenda {
 
     private Long viewCount;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
 
-//    private List<Reply> replies = new ArrayList<>();
-//
-//    private GameInfo gameInfo;
-//
-//    private Board board;
+    @OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Reply> replies = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "game_info_id")
+    private GameInfo gameInfo;
+
+    @ManyToOne
+    @JoinColumn(name = "board_id")
+    private Board board;
 
 
 }
