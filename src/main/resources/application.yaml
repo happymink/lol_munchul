@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   application:
     name: mini-5
   datasource:
@@ -24,3 +26,6 @@ spring:
       hibernate.format_sql: true  # debug query more pretty
 #      hibernate.default_batch_fetch_size: 50 # select complicated query bulk (one of solution n+1)
 
+api:
+  riot:
+    key: ${RIOT_API_KEY}

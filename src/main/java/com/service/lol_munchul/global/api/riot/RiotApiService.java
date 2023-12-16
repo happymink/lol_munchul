@@ -1,5 +1,6 @@
 package com.service.lol_munchul.global.api.riot;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -7,7 +8,9 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class RiotApiService {
 
-    private static final String API_KEY = "RGAPI-d70355aa-cfdc-4c11-a806-259a5ca23745";  // Riot API 키를 여기에 입력해주세요.
+    @Value("${api.riot.key}")
+    private String API_KEY;  // Riot API 키를 여기에 입력해주세요.
+
     private static final String BASE_URL = "https://kr.api.riotgames.com/lol/";  // 한국 서버 기준 URL
 
     private RestTemplate restTemplate;
@@ -18,7 +21,7 @@ public class RiotApiService {
 
     // 소환사 이름으로 소환사 정보 검색
     public String searchSummonerByName(String summonerName) {
-
+        System.out.println("API_KEY = " + API_KEY);
         String url = BASE_URL + "summoner/v4/summoners/by-name/" + summonerName + "?api_key=" + API_KEY;
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
         return response.getBody();
