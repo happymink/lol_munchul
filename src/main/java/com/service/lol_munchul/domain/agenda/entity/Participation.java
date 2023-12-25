@@ -25,8 +25,8 @@ public class Participation {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "participation", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Agenda> agendaList = new ArrayList<>();
-
+    @ManyToOne
+    @JoinColumn(name = "agenda_id")
+    private Agenda agenda;
 
 }

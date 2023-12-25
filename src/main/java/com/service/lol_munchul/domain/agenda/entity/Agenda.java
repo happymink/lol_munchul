@@ -25,9 +25,19 @@ public class Agenda {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Reply> replies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Participation> participation;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "game_info_id")
+    private GameInfo gameInfo;
+
     @ManyToOne
-    @JoinColumn(name = "participation_id")
-    private Participation participation;
+    @JoinColumn(name = "board_id")
+    private Board board;
 
     private String title;
 
@@ -45,18 +55,6 @@ public class Agenda {
     private LocalDateTime updateAt;
 
     private Long viewCount;
-
-
-    @OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Reply> replies = new ArrayList<>();
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "game_info_id")
-    private GameInfo gameInfo;
-
-    @ManyToOne
-    @JoinColumn(name = "board_id")
-    private Board board;
 
 
 }
