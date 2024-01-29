@@ -1,29 +1,56 @@
 package com.service.lol_munchul.global.api.riot;
 
-import com.service.lol_munchul.global.api.riot.response.InfoDto;
+import com.service.lol_munchul.global.api.riot.response.AccountDto;
 import com.service.lol_munchul.global.api.riot.response.MatchDto;
 import com.service.lol_munchul.global.api.riot.response.ParticipantDto;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class RiotApiService {
 
+    private static final String BASE_URL = "https://kr.api.riotgames.com/lol/";  // 한국 서버 기준 URL
     @Value("${api.riot.key}")
     private String API_KEY;  // Riot API 키를 여기에 입력해주세요.
-
-    private static final String BASE_URL = "https://kr.api.riotgames.com/lol/";  // 한국 서버 기준 URL
-
-    private RestTemplate restTemplate;
+    private final String defaultTag = "kr1"; //기본 태그
+    private final RestTemplate restTemplate;
 
     public RiotApiService() {
         this.restTemplate = new RestTemplate();
     }
+
+    public String searchPuuidByRiotId(String name, String tag) {
+
+        String url = "https://asia.api.riotgames.com/riot/account/v1/accounts/by-riot-id/" + name + "/" + tag + "?api_key=" + API_KEY;
+        ResponseEntity<AccountDto> response;
+        try {
+            response = restTemplate.getForEntity(url, AccountDto.class);
+        } catch (HttpClientErrorException e) {
+            throw new RuntimeException("소환사 이름을 찾을 수 없습니다.");
+        }
+
+        return Objects.requireNonNull(response.getBody()).getPuuid();
+    }
+
+    public String searchPuuidByRiotId(String name) {
+
+        String url = "https://asia.api.riotgames.com/riot/account/v1/accounts/by-riot-id/" + name + "/" + defaultTag + "?api_key=" + API_KEY;
+
+        ResponseEntity<String> response;
+        try {
+            response = restTemplate.getForEntity(url, String.class);
+        } catch (HttpClientErrorException e) {
+            throw new RuntimeException("소환사 이름을 찾을 수 없습니다.");
+        }
+        return response.getBody();
+    }
+
 
     // 소환사 이름으로 소환사 정보 검색
     public String searchSummonerByName(String summonerName) {
@@ -35,7 +62,7 @@ public class RiotApiService {
 
     // 소환사 이름으로 전적 ID 검색
     public String searchMatchIdByPuuId(String puuid) {
-        String url = "https://asia.api.riotgames.com/lol/" + "match/v5/matches/by-puuid/" + puuid +"/ids"+ "?api_key=" + API_KEY;
+        String url = "https://asia.api.riotgames.com/lol/" + "match/v5/matches/by-puuid/" + puuid + "/ids" + "?api_key=" + API_KEY;
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
         return response.getBody();
