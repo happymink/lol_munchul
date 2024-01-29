@@ -11,10 +11,6 @@ public class ChampionInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "game_info_id")
-    private GameInfo gameInfo;
-
     private Long championLevel;
 
     private String championName;

@@ -2,12 +2,10 @@ package com.service.lol_munchul.domain.agenda.entity;
 
 import com.service.lol_munchul.domain.agenda.request.AgendaStatus;
 import com.service.lol_munchul.domain.board.entity.Board;
-import com.service.lol_munchul.domain.game.entity.GameInfo;
-import com.service.lol_munchul.domain.member.entity.Member;
 import com.service.lol_munchul.domain.reply.entity.Reply;
+import com.service.lol_munchul.global.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +17,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Agenda {
+public class Agenda extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +28,6 @@ public class Agenda {
 
     @OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Participation> participation;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "game_info_id")
-    private GameInfo gameInfo;
 
     @ManyToOne
     @JoinColumn(name = "board_id")
@@ -50,11 +44,5 @@ public class Agenda {
     @Enumerated(value = EnumType.STRING)
     private AgendaStatus agendaStatus;
 
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updateAt;
-
     private Long viewCount;
-
-
 }

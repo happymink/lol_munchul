@@ -1,14 +1,13 @@
 package com.service.lol_munchul.domain.reply.entity;
 
 import com.service.lol_munchul.domain.agenda.entity.Agenda;
+import com.service.lol_munchul.global.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Getter
-public class Reply {
+public class Reply extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +23,6 @@ public class Reply {
 
     private String content;
 
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
-
     private Long likeCount;
 
     private Long hateCount;
@@ -35,5 +30,4 @@ public class Reply {
     private Long type_id;
 
     private Long group_id;
-
 }
