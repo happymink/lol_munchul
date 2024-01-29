@@ -2,6 +2,7 @@ package com.service.lol_munchul.domain.agenda.entity;
 
 import com.service.lol_munchul.domain.agenda.request.AgendaStatus;
 import com.service.lol_munchul.domain.board.entity.Board;
+import com.service.lol_munchul.domain.game.entity.ChampionInfo;
 import com.service.lol_munchul.domain.reply.entity.Reply;
 import com.service.lol_munchul.global.util.BaseTimeEntity;
 import jakarta.persistence.*;
@@ -23,11 +24,11 @@ public class Agenda extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "agenda", fetch = FetchType.LAZY)
     private List<Reply> replies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Participation> participation;
+    @OneToMany(mappedBy = "agenda", fetch = FetchType.LAZY)
+    private List<ChampionInfo> championInfoList;
 
     @ManyToOne
     @JoinColumn(name = "board_id")
@@ -35,14 +36,9 @@ public class Agenda extends BaseTimeEntity {
 
     private String title;
 
+    private String videoUrl;
+
     private String content;
-
-    private String player1Claim;
-
-    private String player2Claim;
-
-    @Enumerated(value = EnumType.STRING)
-    private AgendaStatus agendaStatus;
 
     private Long viewCount;
 }
