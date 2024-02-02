@@ -1,5 +1,6 @@
 package com.service.lol_munchul.domain.game.entity;
 
+import com.service.lol_munchul.domain.agenda.entity.Agenda;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -10,6 +11,10 @@ public class ChampionInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "agenda_id")
+    private Agenda agenda;
 
     private Long championLevel;
 
