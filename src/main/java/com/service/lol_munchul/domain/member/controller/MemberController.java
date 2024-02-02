@@ -1,14 +1,16 @@
 package com.service.lol_munchul.domain.member.controller;
 
-import com.service.lol_munchul.domain.member.request.SignUpRequest;
+import com.service.lol_munchul.domain.member.request.SummonerResponse;
 import com.service.lol_munchul.domain.member.service.MemberService;
-import jakarta.validation.Valid;
+import com.service.lol_munchul.global.api.riot.RiotApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/members")
@@ -16,27 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     private final MemberService memberService;
+    private final RiotApiService riotApiService;
+    @Value("${api.riot.key}")
+    String a;
 
-
-    @PostMapping("/join")
-    public Long join(
-            @Valid @RequestBody SignUpRequest signUpRequest
-            ){
-
-        return 1L;
+    @GetMapping("/my-info")
+    public SummonerResponse getSummonerInfo(){
+        String name = "똥 같은 플레이";
+        return riotApiService.searchSummonerByName(name);
     }
 
-    @PostMapping("/login")
-    public Long login(){
-
-        return 1L;
+    @GetMapping("/game-history")
+    public List<String> getSummonerMatchHistory(){
+        String puuid = "IbxOxxeQnEpJPnZ-XYsOOLpHrfdx5Otv23pa8amoUba0oT_w0EG3hC8F9_Q1JqxluBzTe3c54Itg_Q";
+        return riotApiService.searchMatchIdByPuuId(puuid);
     }
-
-
-    @PostMapping("/update")
-    public Long update(){
-        return 1L;
-    }
-
-
 }

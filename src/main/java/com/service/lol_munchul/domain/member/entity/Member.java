@@ -37,4 +37,13 @@ public class Member {
         this.password = password;
         this.summonnerName = summonnerName;
     }
+
+    @Builder
+    public Member(String email, String password, String summonnerName, List<Agenda> agendaList, SummonnerInfo summonnerInfo) {
+        this.email = email;
+        this.password = password;
+        this.summonnerName = summonnerName;
+        this.agendaList = agendaList;
+        this.summonnerInfo = summonnerInfo;
+    }
 }
