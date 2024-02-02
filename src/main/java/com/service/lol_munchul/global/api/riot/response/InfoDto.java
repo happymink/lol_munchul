@@ -7,6 +7,5 @@ import java.util.List;
 @Getter
 public class InfoDto {
 
-    private List<ParticipantDto> participants;
-
+    private List<ChampionInfoResponse> participants;
 }
