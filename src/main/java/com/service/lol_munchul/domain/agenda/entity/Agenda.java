@@ -1,16 +1,19 @@
 package com.service.lol_munchul.domain.agenda.entity;
 
-import com.service.lol_munchul.domain.agenda.request.AgendaStatus;
-import com.service.lol_munchul.domain.board.entity.Board;
+import com.service.lol_munchul.domain.agenda.dto.AgendaCreateRequest;
+import com.service.lol_munchul.domain.agenda.dto.AgendaEditRequest;
+import com.service.lol_munchul.domain.agenda.dto.AgendaResponse;
 import com.service.lol_munchul.domain.game.entity.ChampionInfo;
+import com.service.lol_munchul.domain.member.entity.Member;
 import com.service.lol_munchul.domain.reply.entity.Reply;
 import com.service.lol_munchul.global.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +31,11 @@ public class Agenda extends BaseTimeEntity {
     private List<Reply> replies = new ArrayList<>();
 
     @OneToMany(mappedBy = "agenda", fetch = FetchType.LAZY)
-    private List<ChampionInfo> championInfoList;
+    private List<ChampionInfo> championInfoList = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     private String title;
 
@@ -40,5 +43,36 @@ public class Agenda extends BaseTimeEntity {
 
     private String content;
 
-    private Long viewCount;
+    private long viewCount;
+
+    @Builder
+    public Agenda(AgendaCreateRequest agendaCreateRequest, Member member){
+        this.title = agendaCreateRequest.title();
+        this.videoUrl = agendaCreateRequest.videoUrl();
+        this.content = agendaCreateRequest.content();
+        this.member = member;
+    }
+
+    public void increaseViewCount(){
+        this.viewCount++;
+    }
+
+    @Builder
+    public Agenda(Member member, String title, String videoUrl, String content) {
+        this.member = member;
+        this.title = title;
+        this.videoUrl = videoUrl;
+        this.content = content;
+    }
+
+    public Long updateAgenda(AgendaEditRequest agendaEditRequest){
+        this.title = agendaEditRequest.title();
+        this.content = agendaEditRequest.content();
+        this.videoUrl = agendaEditRequest.videoUrl();
+        return this.id;
+    }
+
+    public AgendaResponse from(){
+        return new AgendaResponse(this.title, this.content, this.getVideoUrl(), this.getViewCount(), getCreatedDate());
+    }
 }
