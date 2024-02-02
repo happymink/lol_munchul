@@ -12,7 +12,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +27,10 @@ public class Agenda extends BaseTimeEntity {
     private Long id;
 
     @OneToMany(mappedBy = "agenda", fetch = FetchType.LAZY)
-    private List<Reply> replies = new ArrayList<>();
+    private final List<Reply> replies = new ArrayList<>();
 
     @OneToMany(mappedBy = "agenda", fetch = FetchType.LAZY)
-    private List<ChampionInfo> championInfoList = new ArrayList<>();
+    private final List<ChampionInfo> championInfoList = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -46,15 +45,11 @@ public class Agenda extends BaseTimeEntity {
     private long viewCount;
 
     @Builder
-    public Agenda(AgendaCreateRequest agendaCreateRequest, Member member){
+    public Agenda(AgendaCreateRequest agendaCreateRequest, Member member) {
         this.title = agendaCreateRequest.title();
         this.videoUrl = agendaCreateRequest.videoUrl();
         this.content = agendaCreateRequest.content();
         this.member = member;
-    }
-
-    public void increaseViewCount(){
-        this.viewCount++;
     }
 
     @Builder
@@ -65,14 +60,18 @@ public class Agenda extends BaseTimeEntity {
         this.content = content;
     }
 
-    public Long updateAgenda(AgendaEditRequest agendaEditRequest){
+    public void increaseViewCount() {
+        this.viewCount++;
+    }
+
+    public Long updateAgenda(AgendaEditRequest agendaEditRequest) {
         this.title = agendaEditRequest.title();
         this.content = agendaEditRequest.content();
         this.videoUrl = agendaEditRequest.videoUrl();
         return this.id;
     }
 
-    public AgendaResponse from(){
+    public AgendaResponse from() {
         return new AgendaResponse(this.title, this.content, this.getVideoUrl(), this.getViewCount(), getCreatedDate());
     }
 }
