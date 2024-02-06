@@ -13,6 +13,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,15 +42,23 @@ public class Agenda extends BaseTimeEntity {
 
     private String videoUrl;
 
+    @Column(length = 5000)
     private String content;
+
+    private String matchId;
+
+    private String tier;
 
     private long viewCount;
 
     @Builder
     public Agenda(AgendaCreateRequest agendaCreateRequest, Member member) {
         this.title = agendaCreateRequest.title();
-        this.videoUrl = agendaCreateRequest.videoUrl();
+        this.videoUrl = convertVideoUrl(agendaCreateRequest.videoUrl());
         this.content = agendaCreateRequest.content();
+        this.matchId = agendaCreateRequest.matchId();
+        //this.tier = member.getSummonnerInfo().getSummonerTier();
+        this.tier = "EMERALD";
         this.member = member;
     }
 
@@ -68,10 +78,24 @@ public class Agenda extends BaseTimeEntity {
         this.title = agendaEditRequest.title();
         this.content = agendaEditRequest.content();
         this.videoUrl = agendaEditRequest.videoUrl();
+        this.matchId = agendaEditRequest.matchId();
         return this.id;
     }
 
     public AgendaResponse from() {
-        return new AgendaResponse(this.title, this.content, this.getVideoUrl(), this.getViewCount(), getCreatedDate());
+        //todo this.member.getSummonerName
+        return new AgendaResponse(this.id, "똥 같은 플레이", this.title, this.content, this.videoUrl,
+                this.viewCount, this.matchId, this.tier, convertDateTime(this.getCreatedDate()));
+    }
+
+    private String convertVideoUrl(String videoUrl){
+        //링크에 추가 파라미터가 붙는 경우, 생각해야할까?
+        return videoUrl.replace("watch?v=", "embed/");
+    }
+
+    private String convertDateTime(LocalDateTime dateTime){
+        //Entity에 유틸 의존성을 추가해도 괜찮을까?
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return dateTime.format(formatter);
     }
 }

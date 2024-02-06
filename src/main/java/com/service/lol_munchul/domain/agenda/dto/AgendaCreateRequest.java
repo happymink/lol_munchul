@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 public record AgendaCreateRequest(
         @NotBlank String title,
         @NotNull String content,
-        String videoUrl
+        String videoUrl,
+        String matchId,
+        String tier
 ) {
 }

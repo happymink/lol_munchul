@@ -1,9 +1,9 @@
 package com.service.lol_munchul.global.api.riot;
 
-import com.service.lol_munchul.global.api.dto.ChampionImageResponse;
 import com.service.lol_munchul.global.api.riot.response.AccountDto;
 import com.service.lol_munchul.global.api.riot.response.MatchDto;
 import com.service.lol_munchul.global.api.riot.response.ChampionInfoResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Objects;
-
+@Slf4j
 @Service
 public class RiotApiUtil {
 
@@ -75,5 +75,12 @@ public class RiotApiUtil {
         ResponseEntity<MatchDto> response = restTemplate.getForEntity(url, MatchDto.class);
 
         return response.getBody().getInfo().getParticipants();
+    }
+
+    public String searchSummonerEntry(String encryptedSummonerId){
+        String url = BASE_URL + "league/v4/entries/by-summoner/"+ encryptedSummonerId + "?api_key=" + API_KEY;
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+
+        return response.getBody();
     }
 }

@@ -1,4 +1,4 @@
-package com.service.lol_munchul.domain.member.request;
+package com.service.lol_munchul.domain.member.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

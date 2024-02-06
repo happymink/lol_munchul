@@ -7,6 +7,7 @@ public record AgendaEditRequest(
         @NotNull Long agendaId,
         @NotBlank String title,
         @NotNull String content,
+        @NotNull String matchId,
         String videoUrl
 ) {
 }

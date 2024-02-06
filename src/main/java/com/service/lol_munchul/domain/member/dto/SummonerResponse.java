@@ -1,4 +1,4 @@
-package com.service.lol_munchul.domain.member.request;
+package com.service.lol_munchul.domain.member.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +12,9 @@ public class SummonerResponse {
 
     @JsonProperty("puuid")
     private String puuid;
+
+    @JsonProperty("id")
+    private String id;
 
     @JsonProperty("name")
     private String name;

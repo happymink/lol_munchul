@@ -1,12 +1,14 @@
 package com.service.lol_munchul.domain.agenda.dto;
 
-import java.time.LocalDateTime;
-
 public record AgendaResponse(
+        Long id,
+        String name,
         String title,
         String content,
         String videoUrl,
         Long viewCount,
-        LocalDateTime createdDate
+        String matchId,
+        String tier,
+        String createdDate
 ) {
 }

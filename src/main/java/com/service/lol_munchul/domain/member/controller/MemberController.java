@@ -1,12 +1,11 @@
 package com.service.lol_munchul.domain.member.controller;
 
-import com.service.lol_munchul.domain.member.request.SummonerResponse;
+import com.service.lol_munchul.domain.member.dto.SummonerResponse;
 import com.service.lol_munchul.domain.member.service.MemberService;
 import com.service.lol_munchul.global.api.riot.RiotApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +24,7 @@ public class MemberController {
     @GetMapping("/my-info")
     public SummonerResponse getSummonerInfo(){
         String name = "똥 같은 플레이";
-        return riotApiService.searchSummonerByName(name);
+        return riotApiService.searchSummonerInfoByName(name);
     }
 
     @GetMapping("/game-history")

@@ -15,14 +15,14 @@ public class SummonnerInfo {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private String summonnerTier;
+    private String summonerTier;
 
-    private String summonnerRank;
+    private String summonerRank;
 
     private String winningPercentage;
 
-    private String summonnerTag;
+    private String summonerTag;
 
-    private String summonnerIcon;
+    private String summonerIcon;
 
 }

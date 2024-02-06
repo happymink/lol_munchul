@@ -1,0 +1,35 @@
+{{>layout/header}}
+
+<h1>{{agendas.title}}</h1>
+
+<div class="col-md-12">
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <label for="title" style="font-weight: bold;">티어  </label>
+                <span> {{agendas.tier}} </span>
+                <label for="title">조회 수  </label>
+                <span> {{agendas.viewCount}} </span>
+                <label for="title">작성 일자</label>
+                <span> {{agendas.createdDate}} </span>
+            </div>
+            <div class="form-group">
+                <label for="author"> YouTube 영상 </label>
+                    <iframe width="560" height="315" src="{{agendas.videoUrl}}" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+
+
+            </div>
+            <div class="form-group">
+                <label for="content"> 내용 </label> <br>
+                <textarea readonly class="form-control" id="content">{{agendas.content}} </textarea>
+            </div>
+
+        </form>
+        <a href="/" role="button" class="btn btn-secondary">취소</a>
+        <button type="button" class="btn btn-primary" id="btn-save">등록</button>
+    </div>
+</div>
+
+{{>layout/footer}}

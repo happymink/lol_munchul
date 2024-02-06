@@ -29,3 +29,8 @@ spring:
 api:
   riot:
     key: ${RIOT_API_KEY}
+
+server:
+  servlet:
+    encoding:
+      force-response: true

@@ -23,7 +23,7 @@ public class Member {
 
     private String password;
 
-    private String summonnerName;
+    private String summonerName;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Agenda> agendaList = new ArrayList<>();
@@ -32,17 +32,17 @@ public class Member {
     private SummonnerInfo summonnerInfo;
 
     @Builder
-    public Member(String email, String password, String summonnerName) {
+    public Member(String email, String password, String summonerName) {
         this.email = email;
         this.password = password;
-        this.summonnerName = summonnerName;
+        this.summonerName = summonerName;
     }
 
     @Builder
-    public Member(String email, String password, String summonnerName, List<Agenda> agendaList, SummonnerInfo summonnerInfo) {
+    public Member(String email, String password, String summonerName, List<Agenda> agendaList, SummonnerInfo summonnerInfo) {
         this.email = email;
         this.password = password;
-        this.summonnerName = summonnerName;
+        this.summonerName = summonerName;
         this.agendaList = agendaList;
         this.summonnerInfo = summonnerInfo;
     }
